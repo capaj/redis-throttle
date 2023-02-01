@@ -10,7 +10,7 @@ export const redisThrottle = <T>({
   limit,
   durationSeconds,
   checkIntervalDivisor = 4,
-  checkIntervalMiliseconds,
+  checkIntervalMilliseconds,
   fn
 }: {
   redis: Redis
@@ -23,7 +23,7 @@ export const redisThrottle = <T>({
   /**
    * optional, if not provided, it will be calculated from durationSeconds and checkIntervalDivisor
    */
-  checkIntervalMiliseconds?: number
+  checkIntervalMilliseconds?: number
   durationSeconds: number
   fn: (...args: any[]) => Promise<T>
 }) => {
@@ -35,26 +35,26 @@ export const redisThrottle = <T>({
   }
 
   const sleepMilliseconds =
-    checkIntervalMiliseconds ?? (durationSeconds / checkIntervalDivisor) * 1000
+    checkIntervalMilliseconds ?? (durationSeconds / checkIntervalDivisor) * 1000
   const trampoline = async (
     args: any[],
     resolve: any,
     reject: any
   ): Promise<T | undefined> => {
-    if (running && running >= limit) {
+    if (running && running > limit) {
       await sleep(sleepMilliseconds)
       return trampoline(args as [], resolve, reject) as Promise<T>
     }
 
     running = await getRunningRedisCount()
 
-    if (running >= limit) {
+    if (running > limit) {
       await sleep(sleepMilliseconds)
       return trampoline(args as [], resolve, reject) as Promise<T>
     }
     running = await redis.incr(key)
 
-    if (running >= limit) {
+    if (running > limit) {
       running = await redis.decr(key)
       await sleep(sleepMilliseconds)
       return trampoline(args as [], resolve, reject) as Promise<T>

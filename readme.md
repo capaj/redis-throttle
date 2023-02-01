@@ -6,7 +6,7 @@ import { redisThrottle } from '@capaj/redis-throttle'
 const throttled = redisThrottle({
   redis: redisClient,
   key: 'showcase',
-  limit: 4,
+  limit: 3,
   durationSeconds: 5,
   fn: async (n: number): Promise<number[]> => {
     return new Promise((resolve) => {
