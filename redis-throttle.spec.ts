@@ -1,10 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { redisThrottle } from './redis-throttle'
 import Redis from 'ioredis'
-import isCi from 'is-ci'
 
 const redisClient = new Redis({
-  host: isCi ? '127.0.0.1' : 'localhost',
+  host: '127.0.0.1',
   port: 6379
 })
 
