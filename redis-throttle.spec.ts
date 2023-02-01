@@ -4,7 +4,8 @@ import Redis from 'ioredis'
 import isCi from 'is-ci'
 
 const redisClient = new Redis({
-  host: isCi ? 'redis' : 'localhost'
+  host: isCi ? '127.0.0.1' : 'localhost',
+  port: 6379
 })
 
 const getTime = () => {
