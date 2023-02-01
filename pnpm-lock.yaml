@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/is-ci': ^3.0.0
   ioredis: ^5.3.0
   is-ci: ^3.0.1
   tsup: ^6.5.0
@@ -8,6 +9,7 @@ specifiers:
   vitest: ^0.28.3
 
 devDependencies:
+  '@types/is-ci': 3.0.0
   ioredis: 5.3.0
   is-ci: 3.0.1
   tsup: 6.5.0_typescript@4.9.5
@@ -265,6 +267,12 @@ packages:
 
   /@types/chai/4.3.4:
     resolution: {integrity: sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==}
+    dev: true
+
+  /@types/is-ci/3.0.0:
+    resolution: {integrity: sha512-Q0Op0hdWbYd1iahB+IFNQcWXFq4O0Q5MwQP7uN0souuQ4rPg1vEYcnIOfr1gY+M+6rc8FGoRaBO1mOOvL29sEQ==}
+    dependencies:
+      ci-info: 3.7.1
     dev: true
 
   /@types/node/18.11.15:
