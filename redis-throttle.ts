@@ -8,7 +8,7 @@ export const redisThrottle = <T>({
   redis,
   key,
   limit,
-  durationSeconds,
+  ttl,
   checkIntervalDivisor = 4,
   checkIntervalMilliseconds,
   fn
@@ -24,7 +24,7 @@ export const redisThrottle = <T>({
    * optional, if not provided, it will be calculated from durationSeconds and checkIntervalDivisor
    */
   checkIntervalMilliseconds?: number
-  durationSeconds: number
+  ttl: number
   fn: (...args: any[]) => Promise<T>
 }) => {
   let running: number
@@ -35,7 +35,7 @@ export const redisThrottle = <T>({
   }
 
   const sleepMilliseconds =
-    checkIntervalMilliseconds ?? (durationSeconds / checkIntervalDivisor) * 1000
+    checkIntervalMilliseconds ?? (ttl / checkIntervalDivisor) * 1000
   const trampoline = async (
     args: any[],
     resolve: any,
@@ -52,8 +52,10 @@ export const redisThrottle = <T>({
       await sleep(sleepMilliseconds)
       return trampoline(args as [], resolve, reject) as Promise<T>
     }
-    running = await redis.incr(key)
+    const redisRes = await redis.multi().incr(key).expire(key, ttl).exec() // https://stackoverflow.com/a/50286772/671457 according to this multi is slowest. We could try to make it a bit faster
 
+    // @ts-expect-error
+    running = parseInt(redisRes[0][1], 10)
     if (running > limit) {
       running = await redis.decr(key)
       await sleep(sleepMilliseconds)

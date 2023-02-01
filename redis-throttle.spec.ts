@@ -21,7 +21,7 @@ describe('redis-throttle', () => {
       redis: redisClient,
       key: 'test',
       limit: 3,
-      durationSeconds: 5,
+      ttl: 5,
       fn: async (n: number): Promise<number[]> => {
         return new Promise((resolve) => {
           setTimeout(() => {
