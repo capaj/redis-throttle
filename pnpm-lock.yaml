@@ -2,12 +2,14 @@ lockfileVersion: 5.4
 
 specifiers:
   ioredis: ^5.3.0
+  is-ci: ^3.0.1
   tsup: ^6.5.0
   typescript: ^4.9.5
   vitest: ^0.28.3
 
 devDependencies:
   ioredis: 5.3.0
+  is-ci: 3.0.1
   tsup: 6.5.0_typescript@4.9.5
   typescript: 4.9.5
   vitest: 0.28.3
@@ -425,6 +427,11 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /ci-info/3.7.1:
+    resolution: {integrity: sha512-4jYS4MOAaCIStSRwiuxc4B8MYhIe676yO1sYGzARnjXkWpmzZMMYxY6zu8WYWDhSuth5zhrQ1rhNSibyyvv4/w==}
+    engines: {node: '>=8'}
     dev: true
 
   /cli-truncate/3.1.0:
@@ -886,6 +893,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       binary-extensions: 2.2.0
+    dev: true
+
+  /is-ci/3.0.1:
+    resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==}
+    hasBin: true
+    dependencies:
+      ci-info: 3.7.1
     dev: true
 
   /is-core-module/2.11.0:

@@ -1,9 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { redisThrottle } from './redis-throttle'
-import Redis, { RedisOptions } from 'ioredis'
+import Redis from 'ioredis'
+import isCi from 'is-ci'
 
 const redisClient = new Redis({
-  host: 'localhost'
+  host: isCi ? 'redis' : 'localhost'
 })
 
 const getTime = () => {
